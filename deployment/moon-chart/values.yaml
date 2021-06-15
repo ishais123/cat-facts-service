@@ -1,0 +1,49 @@
+# Default values for moon.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+facts:
+  replicaCount: 1
+  image:
+    repository: ishais/cat-facts-service
+    pullPolicy: IfNotPresent
+    tag: "test"
+
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+  autoscaling:
+    enabled: false
+  ingress:
+    enabled: false
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+
+  service:
+    type: LoadBalancer
+    port: 8081
+
+time:
+  replicaCount: 1
+  image:
+    repository: ishais/time-service
+    pullPolicy: IfNotPresent
+    tag: "test"
+
+  imagePullSecrets: []
+  nameOverride: "time"
+  fullnameOverride: ""
+  autoscaling:
+    enabled: false
+  ingress:
+    enabled: false
+  serviceAccount:
+    create: false
+    annotations: {}
+    name: ""
+
+  service:
+    type: LoadBalancer
+    port: 8082
+

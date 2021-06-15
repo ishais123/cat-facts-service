@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "moon.fullname" . }}-cat-facts"
+  labels:
+    {{- include "moon.cat.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.facts.autoscaling.enabled }}
+  replicas: {{ .Values.facts.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "moon.cat.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.facts.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "moon.cat.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.facts.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "moon.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.facts.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.facts.securityContext | nindent 12 }}
+          image: "{{ .Values.facts.image.repository }}:{{ .Values.facts.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.facts.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /api/v1/cat/facts
+              port: 8081
+          readinessProbe:
+            httpGet:
+              path: /api/v1/cat/facts
+              port: 8081
+          resources:
+            {{- toYaml .Values.facts.resources | nindent 12 }}
+      {{- with .Values.facts.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.facts.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.facts.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

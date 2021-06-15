@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "moon.fullname" . }}-time"
+  labels:
+    {{- include "moon.time.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.time.autoscaling.enabled }}
+  replicas: {{ .Values.time.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "moon.time.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.time.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "moon.time.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.time.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "moon.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.time.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.time.securityContext | nindent 12 }}
+          image: "{{ .Values.time.image.repository }}:{{ .Values.time.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.time.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /api/v1/time
+              port: 8082
+          readinessProbe:
+            httpGet:
+              path: /api/v1/time
+              port: 8082
+          resources:
+            {{- toYaml .Values.time.resources | nindent 12 }}
+      {{- with .Values.time.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.time.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.time.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
