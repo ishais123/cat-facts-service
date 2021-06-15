@@ -11,7 +11,6 @@ podTemplate(containers: [
         container('build') {
             stage('build') {
                 sh "ls -la"
-                sh "pwd"
 
                 GIT_TAG = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
 
