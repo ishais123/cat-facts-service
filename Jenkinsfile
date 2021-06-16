@@ -1,6 +1,6 @@
 podTemplate(containers: [
      containerTemplate(name: 'deploy', image: 'dtzar/helm-kubectl', ttyEnabled: true, command: 'sleep 100000000000'),
-     containerTemplate(name: 'build', image: 'benhall/dind-jenkins-agent', ttyEnabled: true, command: 'sleep 100000000000')
+     containerTemplate(name: 'build', image: 'ishais/jenkins:latest', ttyEnabled: true, command: 'sleep 100000000000')
   ],
   volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')] )
   {
