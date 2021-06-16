@@ -53,8 +53,13 @@ podTemplate(containers: [
                 SVC_HOSTNAME = sh(returnStdout: true, script: "kubectl get services -n ${NAMESPACE} ${SVC_NAME} --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'").trim()
                 SVC_PORT = '8081'
                 SVC_ROUTE = 'api/v1/cat/facts'
-
-                sh "curl ${SVC_HOSTNAME}:${SVC_PORT}/${SVC_ROUTE}"
+                if ( SVC_HOSTNAME ){
+                   sh "curl ${SVC_HOSTNAME}:${SVC_PORT}/${SVC_ROUTE}"
+                }
+                else{
+                    sh "sleep 100"
+                    sh "curl ${SVC_HOSTNAME}:${SVC_PORT}/${SVC_ROUTE}"
+                }
             }
         }
     }
