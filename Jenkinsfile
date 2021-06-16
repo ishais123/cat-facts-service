@@ -11,7 +11,6 @@ podTemplate(containers: [
         container('build') {
             stage('build') {
                 IMAGE = "ishais/cat-facts-service"
-
                 GIT_TAG = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
                 LATEST_TAG = "latest"
 
@@ -36,11 +35,19 @@ podTemplate(containers: [
                 dir('deployment/moon-chart') {
                     sh "helm upgrade --install ${RELEASE} .  -f ${VALUES_FILE} --set facts.image.tag=${GIT_TAG} -n ${NAMESPACE} --create-namespace"
                 }
-                sh "kubectl get svc -n moon"
+                sh "kubectl get svc -n $NAMESPACE"
             }
-            //stage('destroy') {
-              //  sh "kubectl delete ns moon"
-            //}
+            stage('test') {
+                NAMESPACE = 'moon'
+                SVC_NAME = 'moon-release-cat-facts'
+                SVC_HOSTNAME = sh(returnStdout: true, script: "kubectl get services --n ${NAMESPACE} ${SVC_NAME} --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'").trim()
+                SVC_PORT = '8081'
+                SVC_ROUTE = 'api/v1/cat/facts'
+
+                sh "sleep 200"
+                sh 'curl ${SVC_HOSTNAME}:${SVC_PORT}/${SVC_ROUTE}'
+            }
         }
     }
   }
+
