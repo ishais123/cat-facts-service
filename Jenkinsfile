@@ -35,9 +35,13 @@ podTemplate(containers: [
                 VALUES_FILE = 'values.yaml'
 
                 dir('deployment/moon-chart') {
-                    sh "helm upgrade --install ${RELEASE} .  -f ${VALUES_FILE} --set facts.image.tag=${GIT_TAG} -n ${NAMESPACE} --create-namespace"
+                    if ( GIT_TAG ){
+                        sh "helm upgrade --install ${RELEASE} .  -f ${VALUES_FILE} --set facts.image.tag=${GIT_TAG} -n ${NAMESPACE} --create-namespace"
+                    }
+                    else{
+                        sh "helm upgrade --install ${RELEASE} .  -f ${VALUES_FILE} --set facts.image.tag=${LATEST_TAG} -n ${NAMESPACE} --create-namespace"
+                    }
                 }
-                sh "kubectl get svc -n $NAMESPACE"
             }
             stage('test') {
                 // Stage Variables
