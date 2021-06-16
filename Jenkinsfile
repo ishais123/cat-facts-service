@@ -13,6 +13,7 @@ podTemplate(containers: [
                 GIT_TAG = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
 
                 if ( GIT_TAG ){
+                      sh "docker version"
                       sh "docker build --network host -t ishais/cat-facts-service:${GIT_TAG} ."
                       withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker login -u='${USERNAME}' -p='${PASSWORD}'"
