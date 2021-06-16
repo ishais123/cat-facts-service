@@ -16,7 +16,7 @@ podTemplate(containers: [
                 if ( GIT_TAG ){
                       //sh "docker build --network host -t ${IMAGE}:${GIT_TAG} ."
                       withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "./build.sh ${IMAGE} ${GIT_TAG} {USERNAME} {PASSWORD}"
+                        sh "./build.sh ${IMAGE} ${GIT_TAG} ${USERNAME} ${PASSWORD}"
                         //sh "docker login -u='${USERNAME}' -p='${PASSWORD}'"
                         //sh "docker push ${IMAGE}:${GIT_TAG}"
                       }
@@ -24,7 +24,7 @@ podTemplate(containers: [
                 else{
                       //sh "docker build --network host -t ${IMAGE}:latest ."
                       withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                       sh "./build.sh ${IMAGE} latest {USERNAME} {PASSWORD}"
+                       sh "./build.sh ${IMAGE} latest ${USERNAME} ${PASSWORD}"
                        //sh "docker login -u='${USERNAME}' -p='${PASSWORD}'"
                        //sh "docker push ${IMAGE}:latest"
                       }
