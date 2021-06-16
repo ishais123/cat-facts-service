@@ -2,20 +2,21 @@
 
 Build & Deploy Moon Helm-Chart over EKS cluster using Jenkins CI/CD Pipeline   
 
+## Clone Repository
+git clone https://github.com/ishais123/cat-facts-service.git
+
 ##Requirements
+
 | Name | Version |
 |------|-------------|
 | <a name="eksctl"></a> [eksctl](eksctl) | 0.40.0 
 | <a name="AWS CLI"></a> [AWSCLI](AWSCLI) | v2 
 | <a name="Helm"></a> [Helm](Helm) | v3.4.2 
 
-## Clone repo
-git clone https://github.com/ishais123/cat-facts-service.git
-
 ## EKS setup
 ```bash
 // Use default aws profile by default, you can change it with --profile flag
-// You can modify cluster configuration in eksctl.yaml file
+// You can modify cluster configuration in deployment/eksctl.yaml file
 
 eksctl create cluster -f deployment/eksctl.yaml 
 aws eks  update-kubeconfig --name <cluster-name> --region <aws-region>
