@@ -3,7 +3,7 @@ from flask import Flask
 import requests
 import json
 
-CAT_FACTS_URL = 'https://cat-fact.herokuapp.com/factss/random?amount=1'
+CAT_FACTS_URL = 'https://cat-fact.herokuapp.com/facts/random?amount=1'
 DEFAULT_FACTS = {
     "Status": "No response from API",
     "DefaultFact": "Cats are cute"
