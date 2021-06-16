@@ -45,6 +45,10 @@ helm upgrade --install <release-name> .  -f values.yaml -n <namespace> --create-
 ```
 ## Jenkins Pipeline
 ```bash
+// Get Jenkins admin password 
+
+printf $(kubectl get secret --namespace jenkins jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+
 // Kubernetes plugin required
 
 // You need to configure 2 Credentials: 
@@ -61,8 +65,6 @@ helm upgrade --install <release-name> .  -f values.yaml -n <namespace> --create-
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
 
 ## License
