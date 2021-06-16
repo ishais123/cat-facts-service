@@ -22,11 +22,8 @@ podTemplate(containers: [
                       }
                 }
                 else{
-                      //sh "docker build --network host -t ${IMAGE}:latest ."
                       withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                        sh "./build.sh ${IMAGE} latest ${USERNAME} ${PASSWORD}"
-                       //sh "docker login -u='${USERNAME}' -p='${PASSWORD}'"
-                       //sh "docker push ${IMAGE}:latest"
                       }
                 }
             }
@@ -35,8 +32,7 @@ podTemplate(containers: [
             stage('deploy') {
                 sh "kubectl create ns moon"
                 dir('deployment/moon-chart') {
-                    sh "sed '0,/latest/s//$GIT_TAG/' values.yaml"
-                    sh "helm upgrade --install moon-release . -f values.yaml -n moon"
+                    sh "helm upgrade --install moon-release . --set facts.tag=${GIT_TAG} -f values.yaml -n moon"
                 }
                 sh "kubectl get svc -n moon"
             }
