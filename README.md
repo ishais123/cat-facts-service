@@ -52,7 +52,7 @@ printf $(kubectl get secret --namespace jenkins jenkins -o jsonpath="{.data.jenk
 
 // Kubernetes plugin required
 
-// You need to configure 2 Credentials: 
+// You have to configure 2 Credentials: 
 1) jenkins-user-github - github username & password
 2) docker-hub-cred - docker-hub username & password
 
@@ -60,7 +60,7 @@ printf $(kubectl get secret --namespace jenkins jenkins -o jsonpath="{.data.jenk
 1) GitHub hook trigger for GITScm polling
 2) Poll SCM
 
-// You must configure repository setting in the pipeline configuration
+// You must configure Github repository setting (URL, creds, Jenkinsfile location) in the pipeline configuration
 
 // there is github webhook in repo which trigger the pipeline each push event
 ```
