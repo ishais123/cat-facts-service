@@ -47,9 +47,6 @@ podTemplate(containers: [
                 SVC_PORT = '8081'
                 SVC_ROUTE = 'api/v1/cat/facts'
 
-                //sh "sleep 200"
-                CURL_TARGET = "${SVC_HOSTNAME}:${SVC_PORT}/${SVC_ROUTE}"
-
                 sh "curl ${SVC_HOSTNAME}:${SVC_PORT}/${SVC_ROUTE}"
             }
         }
