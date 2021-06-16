@@ -70,7 +70,7 @@ printf $(kubectl get secret --namespace jenkins jenkins -o jsonpath="{.data.jenk
 // Use tag to push new changes
 
 git tag <tag value>
-git push origin main --tags <tag values>
+git push origin main --tags <tag value>
 
 // It will trigger the Pipeline using webhook
 
