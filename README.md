@@ -69,8 +69,13 @@ printf $(kubectl get secret --namespace jenkins jenkins -o jsonpath="{.data.jenk
 ```bash
 // Use tag to push new changes
 
+git init .
+git remote add origin <repo URL>
+git add .
+git commit -a -m "first commit by me"
+git pull origin main
 git tag <tag value>
-git push origin main --tags <tag value>
+git push -f origin main --tags <tag value>
 
 // It will trigger the Pipeline using webhook
 
