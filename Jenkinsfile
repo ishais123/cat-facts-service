@@ -29,9 +29,13 @@ podTemplate(containers: [
         }
         container('deploy') {
             stage('deploy') {
-                sh "kubectl create ns moon"
-                dir('deployment/moon-chart') {
-                    sh "helm upgrade --install moon-release .  -f values.yaml --set facts.image.tag=${GIT_TAG} -n moon"
+                CHART_DIR = 'deployment/moon-chart'
+                NAMESPACE = 'moon'
+                RELEASE = 'moon-release'
+                VALUES_FILE = 'values.yaml'
+
+                dir(${CHART_DIR}) {
+                    sh "helm upgrade --install ${RELEASE} .  -f ${VALUES_FILE} --set facts.image.tag=${GIT_TAG} -n ${NAMESPACE} --create-namespace"
                 }
                 sh "kubectl get svc -n moon"
             }
