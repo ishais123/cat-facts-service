@@ -12,16 +12,19 @@ podTemplate(containers: [
             stage('build') {
                 // Stage Variables
                 IMAGE = "ishais/cat-facts-service"
+                // get commit tag
                 GIT_TAG = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
                 LATEST_TAG = "latest"
 
                 if ( GIT_TAG ){
                       withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        // Run build script to publish new docker image
                         sh "./build.sh ${IMAGE} ${GIT_TAG} ${USERNAME} ${PASSWORD}"
                       }
                 }
                 else{
                       withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                       // Run build script to publish new docker image
                        sh "./build.sh ${IMAGE} ${LATEST_TAG} ${USERNAME} ${PASSWORD}"
                       }
                 }
