@@ -13,6 +13,7 @@ git clone https://github.com/ishais123/cat-facts-service.git
 | <a name="eksctl"></a> [eksctl](eksctl) | 0.40.0 
 | <a name="AWS CLI"></a> [AWSCLI](AWSCLI) | 2 
 | <a name="Helm"></a> [Helm](Helm) | 3.4.2 
+| <a name="Docker"></a> [Docker](Docker) | 20.10.5
 | <a name="git"></a> [git](git) | 2.23.0
 
 ## EKS setup
