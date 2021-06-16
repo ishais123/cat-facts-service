@@ -84,5 +84,3 @@ git push -f origin main --tags <tag value>
 
 ```
 
-
-## License
