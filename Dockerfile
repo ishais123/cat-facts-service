@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 8081
 
-CMD [ "python", "./cat-facts-service.py" ]
+CMD [ "python", "./app.py" ]
