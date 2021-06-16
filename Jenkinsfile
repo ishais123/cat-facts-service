@@ -36,7 +36,7 @@ podTemplate(containers: [
 
                 dir('deployment/moon-chart') {
                     if ( GIT_TAG ){
-                        sh "helm upgrade --install ${RELEASE} .  -f ${VALUES_FILE} --set facts.image.tag=${GIT_TAG} -n ${NAMESPACE} --create-namespace"
+                        sh "helm upgrade --install ${RELEASE} .  --set facts.image.tag=${GIT_TAG} -n ${NAMESPACE} --create-namespace"
                     }
                     else{
                         sh "helm upgrade --install ${RELEASE} .  -f ${VALUES_FILE} --set facts.image.tag=${LATEST_TAG} -n ${NAMESPACE} --create-namespace"
