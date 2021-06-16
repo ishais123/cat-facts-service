@@ -39,7 +39,10 @@ podTemplate(containers: [
                 dir('deployment/moon-chart') {
                     sh "helm install moon-release . -f values.yaml -n moon"
                 }
-                sh "kubectl get nodes"
+                sh "kubectl get svc -n moon"
+            }
+            stage('destroy') {
+                sh "kubectl delete ns moon"
             }
         }
     }
