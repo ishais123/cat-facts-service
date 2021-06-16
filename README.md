@@ -9,9 +9,10 @@ git clone https://github.com/ishais123/cat-facts-service.git
 
 | Name | Version |
 |------|-------------|
+| <a name="eksctl"></a> [kubectl](kubectl) | 1.19.7 
 | <a name="eksctl"></a> [eksctl](eksctl) | 0.40.0 
-| <a name="AWS CLI"></a> [AWSCLI](AWSCLI) | v2 
-| <a name="Helm"></a> [Helm](Helm) | v3.4.2 
+| <a name="AWS CLI"></a> [AWSCLI](AWSCLI) | 2 
+| <a name="Helm"></a> [Helm](Helm) | 3.4.2 
 
 ## EKS setup
 ```bash
@@ -62,10 +63,18 @@ printf $(kubectl get secret --namespace jenkins jenkins -o jsonpath="{.data.jenk
 
 // You must configure Github repository setting (URL, creds, Jenkinsfile location) in the pipeline configuration
 
-// there is github webhook in repo which trigger the pipeline each push event
+// There is github webhook in repo which trigger the pipeline each push event
 ```
+## Push Changes 
+```bash
+// Use tag to push new changes
 
-## Contributing
+git tag <tag value>
+git push origin main --tags <tag values>
+
+// It will trigger the Pipeline using webhook
+
+```
 
 
 ## License
