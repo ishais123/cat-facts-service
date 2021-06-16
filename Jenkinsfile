@@ -27,7 +27,6 @@ podTemplate(containers: [
                        sh "docker push ishais/cat-facts-service:latest"
                       }
                 }
-                sh "docker images"
             }
         }
         container('deploy') {
