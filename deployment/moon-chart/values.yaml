@@ -32,7 +32,7 @@ time:
     tag: "latest"
 
   imagePullSecrets: []
-  nameOverride: "time"
+  nameOverride: ""
   fullnameOverride: ""
   autoscaling:
     enabled: false
