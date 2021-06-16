@@ -6,7 +6,7 @@ Build & Deploy Moon Helm-Chart over EKS cluster using Jenkins CI/CD Pipeline
 | Name | Version |
 |------|-------------|
 | <a name="eksctl"></a> [eksctl](eksctl) | 0.40.0 
-| <a name="AWS CLI"></a> [AWSCLI](AWS CLI) | v2 
+| <a name="AWS CLI"></a> [AWSCLI](AWSCLI) | v2 
 | <a name="Helm"></a> [Helm](Helm) | v3.4.2 
 
 ## Clone repo
