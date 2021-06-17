@@ -16,7 +16,7 @@ app = Flask(__name__)
 @app.route('/api/v1/cat/facts', methods=['POST', 'GET'])
 def cat_facts():
     try:
-        res = requests.get(CAT_FACTS_URL, timeout=5)
+        res = requests.get(CAT_FACTS_URL, timeout=2)
         if res.status_code == 200:
             return json.loads(res.text)
         else:
