@@ -3,10 +3,13 @@ from flask import Flask
 import requests
 import json
 
-CAT_FACTS_URL = 'https://cat-fact.herokuapp.com/facts/random?amount=1'
+CAT_FACTS_URL = 'https://cat-fact.herokuapp.com/facts/'
 DEFAULT_FACTS = {
     "Status": "No response from API",
     "DefaultFact": "Cats are cute"
+}
+HEALTH_CHECK = {
+    "Status": "healthy"
 }
 
 app = Flask(__name__)
@@ -16,13 +19,18 @@ app = Flask(__name__)
 @app.route('/api/v1/cat/facts', methods=['POST', 'GET'])
 def cat_facts():
     try:
-        res = requests.get(CAT_FACTS_URL, timeout=1)
+        res = requests.get(CAT_FACTS_URL, timeout=5)
         if res.status_code == 200:
             return json.loads(res.text)
         else:
             return json.dumps(DEFAULT_FACTS)
     except:
-        return json.dumps(DEFAULT_FACTS)
+        return json.dumps(DEFAULT_FACTS), 200
+
+
+@app.route('/api/v1/health', methods=['POST', 'GET'])
+def health():
+    return json.dumps(HEALTH_CHECK), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=8081)
