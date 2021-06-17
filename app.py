@@ -27,7 +27,6 @@ def cat_facts():
     except:
         return json.dumps(DEFAULT_FACTS), 200
 
-
 @app.route('/api/v1/health', methods=['POST', 'GET'])
 def health():
     return json.dumps(HEALTH_CHECK), 200
