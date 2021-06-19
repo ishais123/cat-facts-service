@@ -19,7 +19,7 @@ app = Flask(__name__)
 # HTTP listener
 @app.route('/api/v1/cat/facts', methods=['POST', 'GET'])
 def cat_facts():
-    return "hello world ishai"
+    return "hello world ishai king"
     # try:
     #     res = requests.get(CAT_FACTS_URL, timeout=5)
     #     if res.status_code == 200:
